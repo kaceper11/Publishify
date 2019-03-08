@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PublishifyContext;
 
 namespace Publishify
 {
@@ -14,6 +16,8 @@ namespace Publishify
         {
             Configuration = configuration;
         }
+
+        public static string ConnectionString { get; private set; }
 
         public IConfiguration Configuration { get; }
 
@@ -27,6 +31,10 @@ namespace Publishify
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+
+            ConnectionString = Configuration.GetConnectionString("PublishifyContext");
+            services.AddDbContext<PublishifyContext.PublishifyContext>(options => options.UseSqlServer(ConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
