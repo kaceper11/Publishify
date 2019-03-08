@@ -22,7 +22,7 @@ namespace Publishify.Controllers
         [HttpPost("createBranch")]
         public void CreateBranch(BranchModel branch)
         {
-            this.publishifyContext.Branches.Add(new Branch()
+            this.publishifyContext.Branch.Add(new Branch()
             {
                 Id = branch.Id,
                 BranchName = branch.BranchName,
@@ -36,7 +36,7 @@ namespace Publishify.Controllers
         [HttpPut("editBranch")]
         public void EditBranch(BranchModel branchModel)
         {
-            var branch = this.publishifyContext.Branches.SingleOrDefault(b => b.Id == branchModel.Id);
+            var branch = this.publishifyContext.Branch.SingleOrDefault(b => b.Id == branchModel.Id);
             this.MapBranchModel(branch, branchModel);
             this.publishifyContext.SaveChanges();
         }
@@ -46,7 +46,7 @@ namespace Publishify.Controllers
         {
             if (CanBranchBeRemoved(branch))
             {
-                this.publishifyContext.Branches.Remove(branch);
+                this.publishifyContext.Branch.Remove(branch);
                 this.publishifyContext.SaveChanges();
                 return true;
             }
@@ -54,22 +54,31 @@ namespace Publishify.Controllers
             return false;
         }
 
-        [HttpGet("getBranches")]
-        public IEnumerable<BranchModel> GetBranches()
+
+        [HttpGet("getCurrentBranchesInfo")]
+        public IEnumerable<CurrentBranchInfoModel> GetCurrentBranchesInfo()
         {
-            return this.publishifyContext.Branches.Select(b => new BranchModel()
-            {
-                Id = b.Id,
-                BranchName = b.BranchName
-            }).OrderBy(n => n.BranchName).ToList();
+            return (from b in this.publishifyContext.Branch
+                join p in this.publishifyContext.Publish on b.Id equals p.BranchId
+                join u in this.publishifyContext.User on p.UserId equals u.Id        
+                select new CurrentBranchInfoModel()
+                {
+                    CurrentBuild = p.BuildName,
+                    BranchLink = b.BranchLink,
+                    BranchVersion = b.BranchVersion,
+                    BranchName = b.BranchName,
+                    PublishedBy = u.Name,
+                    LastPublishDate = this.publishifyContext.Publish.OrderByDescending(d => d.PublishDate)
+                        .FirstOrDefault(x => x.BranchId == b.Id).PublishDate                       
+                }).ToList();
         }
 
         [HttpGet("getPublishHistory")]
         public IEnumerable<PublishModel> GetPublishHistory(int branchId)
         {
-            return (from b in this.publishifyContext.Branches
-                join p in this.publishifyContext.Publishes on b.Id equals p.BranchId
-                join u in this.publishifyContext.Users on p.UserId equals u.Id
+            return (from b in this.publishifyContext.Branch
+                join p in this.publishifyContext.Publish on b.Id equals p.BranchId
+                join u in this.publishifyContext.User on p.UserId equals u.Id
                     where b.Id == branchId
                     select new PublishModel()
                 {

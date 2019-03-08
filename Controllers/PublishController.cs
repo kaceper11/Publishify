@@ -9,38 +9,23 @@ namespace Publishify.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PublishController : ControllerBase
+    public class PublishController : Controller
     {
-        // GET: api/Publish
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly PublishifyContext.PublishifyContext publishifyContext;
+
+        public PublishController(PublishifyContext.PublishifyContext publishifyContext)
         {
-            return new string[] { "value1", "value2" };
+            this.publishifyContext = publishifyContext;
         }
 
-        // GET: api/Publish/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("getBranches")]
+        public IEnumerable<BranchModel> GetBranches()
         {
-            return "value";
-        }
-
-        // POST: api/Publish
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Publish/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return this.publishifyContext.Branch.Select(b => new BranchModel()
+            {
+                Id = b.Id,
+                BranchName = b.BranchName
+            }).OrderBy(n => n.BranchName).ToList();
         }
     }
 }

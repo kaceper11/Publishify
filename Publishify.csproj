@@ -20,13 +20,39 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\components\table-complete\**" />
+    <Compile Remove="ClientApp\src\app\components\tabset-basic\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\components\table-complete\**" />
+    <Content Remove="ClientApp\src\app\components\tabset-basic\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\components\table-complete\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\components\tabset-basic\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\components\table-complete\**" />
+    <None Remove="ClientApp\src\app\components\tabset-basic\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\apiServices\branchApi.service.ts" />
+    <None Remove="ClientApp\src\app\apiServices\publishApi.service.ts" />
+    <None Remove="ClientApp\src\app\components\table\table.component.ts" />
+    <None Remove="ClientApp\src\app\models\CurrentBranchInfoModel.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PublishifyContext\PublishifyContext.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\apiServices\branchApi.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\apiServices\publishApi.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\table\table.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\CurrentBranchInfoModel.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\components\modal\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
