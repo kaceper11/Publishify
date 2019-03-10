@@ -8,14 +8,16 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BranchService } from './apiServices/branchApi.service';
 import { NgbdTabset } from './components/tabset/tabset.component';
-import { NgbdTable } from './components/table/table.component';
+import { BranchTable } from './components/branch/branchTable.component';
+import { PublishHistoryModal } from './components/branch/publishHistoryModal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NgbdTabset,
-    NgbdTable
+    BranchTable,
+    PublishHistoryModal
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

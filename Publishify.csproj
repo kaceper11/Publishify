@@ -36,8 +36,8 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\apiServices\branchApi.service.ts" />
     <None Remove="ClientApp\src\app\apiServices\publishApi.service.ts" />
-    <None Remove="ClientApp\src\app\components\table\table.component.ts" />
     <None Remove="ClientApp\src\app\models\CurrentBranchInfoModel.ts" />
+    <None Remove="ClientApp\src\app\models\PublishHistoryModel.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,12 +47,15 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\apiServices\branchApi.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\apiServices\publishApi.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\components\table\table.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\branch\publishHistoryModalcomponent.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\branch\branchTable.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\CurrentBranchInfoModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\PublishHistoryModel.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\components\modal\" />
+    <Folder Include="ClientApp\src\app\components\branchSetup\" />
+    <Folder Include="ClientApp\src\app\components\publish\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

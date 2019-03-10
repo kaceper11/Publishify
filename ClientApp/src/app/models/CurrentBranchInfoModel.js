@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var CurrentBranchInfoModel = /** @class */ (function () {
-    function CurrentBranchInfoModel() {
+var CurrentBranchInfo = /** @class */ (function () {
+    function CurrentBranchInfo() {
     }
-    return CurrentBranchInfoModel;
+    return CurrentBranchInfo;
 }());
-exports.CurrentBranchInfoModel = CurrentBranchInfoModel;
+exports.CurrentBranchInfo = CurrentBranchInfo;
 //# sourceMappingURL=CurrentBranchInfoModel.js.map

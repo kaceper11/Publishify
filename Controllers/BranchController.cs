@@ -59,21 +59,23 @@ namespace Publishify.Controllers
         public IEnumerable<CurrentBranchInfoModel> GetCurrentBranchesInfo()
         {
             return (from b in this.publishifyContext.Branch
-                join p in this.publishifyContext.Publish on b.Id equals p.BranchId
+                let p = this.publishifyContext.Publish.OrderByDescending(pu => pu.PublishDate)
+                    .FirstOrDefault(p2 => b.Id == p2.BranchId)
                 join u in this.publishifyContext.User on p.UserId equals u.Id        
                 select new CurrentBranchInfoModel()
                 {
+                    Id = b.Id,
                     CurrentBuild = p.BuildName,
                     BranchLink = b.BranchLink,
                     BranchVersion = b.BranchVersion,
                     BranchName = b.BranchName,
                     PublishedBy = u.Name,
-                    LastPublishDate = this.publishifyContext.Publish.OrderByDescending(d => d.PublishDate)
-                        .FirstOrDefault(x => x.BranchId == b.Id).PublishDate                       
+                    LastPublishDate = p.PublishDate,
+                    BuildStartDateTime = p.BuildStartDate
                 }).ToList();
         }
 
-        [HttpGet("getPublishHistory")]
+        [HttpGet("getPublishHistory/{branchId}")]
         public IEnumerable<PublishModel> GetPublishHistory(int branchId)
         {
             return (from b in this.publishifyContext.Branch

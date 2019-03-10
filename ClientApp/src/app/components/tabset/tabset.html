@@ -3,6 +3,7 @@
     <ng-template ngbTabTitle><b>Branch info</b></ng-template>
     <ng-template ngbTabContent>
       <ngbd-table></ngbd-table>
+      <ngbd-modal (messageEvent)="showPublishHistory($event)"></ngbd-modal>
     </ng-template>
   </ngb-tab>
   <ngb-tab title="Setup"> 

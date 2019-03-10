@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CurrentBranchInfo } from '../models/CurrentBranchInfoModel';
+import { PublishHistory } from '../models/PublishHistoryModel';
 
 
 @Injectable()
@@ -15,6 +16,10 @@ export class BranchService {
 
   public getCurrentBranchesInfo() {
     return this.http.get<CurrentBranchInfo[]>(this.accessPointUrl + '/getCurrentBranchesInfo', { headers: this.headers });
+  }
+
+  public getPublishHistory(branchId: number) {
+    return this.http.get<PublishHistory[]>(this.accessPointUrl + '/getPublishHistory/' + branchId, { headers: this.headers });
   }
 
 

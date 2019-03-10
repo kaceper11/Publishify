@@ -4,6 +4,8 @@ namespace Publishify.Controllers
 {
     public class CurrentBranchInfoModel
     {
+        public int Id { get; set; }
+
         public string BranchName { get; set; }
 
         public string BranchLink { get; set; }
@@ -15,5 +17,7 @@ namespace Publishify.Controllers
         public string CurrentBuild { get; set; }
 
         public string BranchVersion { get; set; }
+
+        public DateTime BuildStartDateTime { get; set; }
     }
 }
